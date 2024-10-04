@@ -1,0 +1,3 @@
+[submodule "PairwiseAlignment/WFA2-lib"]
+	path = PairwiseAlignment/WFA2-lib
+	url = git@github.com:smarco/WFA2-lib.git
