@@ -9,8 +9,16 @@ HAlign4 is a high-performance multiple sequence alignment software based on the 
 - **Algorithm Optimization**: Replaced the original suffix tree with BWT for more efficient indexing and searching.
 - **Memory and Speed Optimization**: Introduced the wavefront alignment algorithm to reduce memory usage and improve alignment speed, especially for long sequences.
 
+## Cloning the Repository
+To get the HAlign4 code, first clone the repository
+```bash
+# Clone the repository
+git clone --recursive https://github.com/metaphysicser/HAlign-4.git
+cd HAlign-4
+```
 
 ## Compilation
+
 HAlign4 is written in C++ and can be compiled using the `make` tool.
 
 ```bash
