@@ -1,9 +1,9 @@
-# HAlign3.5
+# HAlign4
 
-HAlign3.5 is a high-performance multiple sequence alignment software based on the star alignment strategy, designed for efficiently aligning large numbers of sequences. Compared to its predecessor HAlign3, HAlign3.5 further enhances the ability to handle long sequences and large-scale datasets, enabling fast and efficient alignment on standard computing devices.
+HAlign4 is a high-performance multiple sequence alignment software based on the star alignment strategy, designed for efficiently aligning large numbers of sequences. Compared to its predecessor HAlign3, HAlign4 further enhances the ability to handle long sequences and large-scale datasets, enabling fast and efficient alignment on standard computing devices.
 
 ## Background
-[HAlign3](https://github.com/malabz/HAlign-3) was implemented in Java and was capable of efficiently aligning ultra-large sets of similar DNA/RNA sequences, but had limitations when dealing with long sequences and very large datasets. To address these issues, HAlign3.5 was reimplemented in C++ and incorporates the Burrows-Wheeler Transform (BWT) and wavefront alignment algorithm.
+[HAlign3](https://github.com/malabz/HAlign-3) was implemented in Java and was capable of efficiently aligning ultra-large sets of similar DNA/RNA sequences, but had limitations when dealing with long sequences and very large datasets. To address these issues, HAlign4 was reimplemented in C++ and incorporates the Burrows-Wheeler Transform (BWT) and wavefront alignment algorithm.
 
 ### Key Improvements
 - **Algorithm Optimization**: Replaced the original suffix tree with BWT for more efficient indexing and searching.
@@ -11,17 +11,17 @@ HAlign3.5 is a high-performance multiple sequence alignment software based on th
 
 
 ## Compilation
-HAlign3.5 is written in C++ and can be compiled using the `make` tool.
+HAlign4 is written in C++ and can be compiled using the `make` tool.
 
 ```bash
 make
 ```
 
-After compilation, an executable file named `halign3.5` will be generated.
+After compilation, an executable file named `halign4` will be generated.
 
 ## Usage
 ```bash
-./halign3.5 Input_file Output_file [-r/--reference val] [-t/--threads val] [-sa/--sa val] [-h/--help]
+./halign4 Input_file Output_file [-r/--reference val] [-t/--threads val] [-sa/--sa val] [-h/--help]
 ```
 
 ### Parameter Description
@@ -33,10 +33,10 @@ After compilation, an executable file named `halign3.5` will be generated.
 - `-h/--help`: Show help information.
 
 ## Example
-Here is a simple example of using HAlign3.5 for multiple sequence alignment:
+Here is a simple example of using HAlign4 for multiple sequence alignment:
 
 ```bash
-./halign3.5 input.fasta output.fasta -t 4
+./halign4 input.fasta output.fasta -t 4
 ```
 
 This command will use 4 threads to align the sequences in the `input.fasta` file, and the result will be saved in the `output.fasta` file.
@@ -45,4 +45,4 @@ This command will use 4 threads to align the sequences in the `input.fasta` file
 - [HAlign Official Website](http://lab.malab.cn/soft/halign/)
 
 ## License
-HAlign3.5 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign3.5/blob/main/LICENSE).
+HAlign4 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign4/blob/main/LICENSE).

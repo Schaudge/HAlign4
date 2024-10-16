@@ -31,7 +31,7 @@ SUBDIRS=PairwiseAlignment/WFA2-lib/alignment \
         PairwiseAlignment/WFA2-lib/utils \
         PairwiseAlignment/WFA2-lib/wavefront
 
-all: CC_FLAGS+=-O3 -march=native #-flto -ffat-lto-objects
+all: CC_FLAGS+=-O3 #-march=native #-flto -ffat-lto-objects
 all: setup build lib_wfa h3_5
 
 # Debug target
@@ -89,10 +89,10 @@ h3_5: *.cpp $(LIB_WFA) $(LIB_WFA_CPP)
 	./Utils/Utils.cpp \
 	./multi-thread/multi.cpp \
 	./StarAlignment/StarAligner.cpp \
-	stmsa.cpp -o halign3.5 -static-libstdc++ -std=c++17 -lpthread -lwfacpp $(LIBS)
+	stmsa.cpp -o halign4 -static-libstdc++ -std=c++17 -lpthread -lwfacpp $(LIBS)
 
 # Clean target
 clean: 
 	rm -rf $(FOLDER_BUILD) $(FOLDER_BUILD_CPP) $(FOLDER_LIB) 2> /dev/null
 	rm -rf $(FOLDER_TESTS)/*.alg $(FOLDER_TESTS)/*.log* 2> /dev/null
-	rm -f halign3.5
+	rm -f halign4
