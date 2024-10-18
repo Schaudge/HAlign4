@@ -9,24 +9,62 @@ HAlign4 is a high-performance multiple sequence alignment software based on the 
 - **Algorithm Optimization**: Replaced the original suffix tree with BWT for more efficient indexing and searching.
 - **Memory and Speed Optimization**: Introduced the wavefront alignment algorithm to reduce memory usage and improve alignment speed, especially for long sequences.
 
-## Cloning the Repository
-To get the HAlign4 code, first clone the repository
+
+## Installation Methods
+
+### 1. Conda Installation
+
+This method uses Conda to create an isolated environment and install HAlign4 with all dependencies.
+
+   
 ```bash
-# Clone the repository
-git clone --recursive https://github.com/metaphysicser/HAlign-4.git
-cd HAlign-4
+conda create -n halign4
+conda activate halign4
+halign4 -h
 ```
 
-## Compilation
 
-HAlign4 is written in C++ and can be compiled using the `make` tool.
+### 2. Source Installation with CMake
 
-```bash
-make
+This method allows you to manually compile HAlign4 using CMake and the system's compiler.
+
+#### Steps:
+
+1. **Install required packages**:
+
+   You need to have `CMake` and a C++ compiler installed. On Ubuntu, you can install them as follows:
+
+   ```bash
+   sudo apt-get update
+   sudo apt-get install cmake gcc
+   ```
+
+2. **Clone the repository**:
+
+   ```bash
+   git clone --recursive https://github.com/metaphysicser/HAlign-4.git
+   cd HAlign-4
+   ```
+
+3. **Create a build directory and compile with CMake**:
+
+   ```bash
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
+
+4. **Run HAlign4**:
+
+   After the build process completes, the executable `halign4` will be available in the `build` directory. You can run it using the following command:
+
+   ```bash
+   ./halign4 -h
+   ```
+## Usage
+By following either of these methods, you can successfully install and run HAlign4. Choose the method that best fits your development environment.
 ```
-
-After compilation, an executable file named `halign4` will be generated.
-
 ## Usage
 ```bash
 ./halign4 Input_file Output_file [-r/--reference val] [-t/--threads val] [-sa/--sa val] [-h/--help]
@@ -54,3 +92,5 @@ This command will use 4 threads to align the sequences in the `input.fasta` file
 
 ## License
 HAlign4 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign4/blob/main/LICENSE).
+
+
