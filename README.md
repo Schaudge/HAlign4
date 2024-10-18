@@ -20,6 +20,7 @@ This method uses Conda to create an isolated environment and install HAlign4 wit
 ```bash
 conda create -n halign4
 conda activate halign4
+conda install -c malab halign4
 halign4 -h
 ```
 
