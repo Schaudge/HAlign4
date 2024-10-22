@@ -66,8 +66,6 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
 ## Usage
 By following either of these methods, you can successfully install and run HAlign4. Choose the method that best fits your development environment.
 ```
-## Usage
-```bash
 ./halign4 Input_file Output_file [-r/--reference val] [-t/--threads val] [-sa/--sa val] [-h/--help]
 ```
 
