@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <cstddef> // For size_t
 
 namespace utils
 {

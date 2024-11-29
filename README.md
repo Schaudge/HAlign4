@@ -47,15 +47,12 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
    cd HAlign-4
    ```
 
-3. **Create a build directory and compile with CMake**:
+3. **Create a build directory and compile with Make**:
 
    ```bash
-   mkdir build
-   cd build
-   cmake ..
    make
    ```
-
+注意！请使用gcc-9和g++-9来make，不要开启多线程，否则会make失败，我们迅速解决此问题
 4. **Run HAlign4**:
 
    After the build process completes, the executable `halign4` will be available in the `build` directory. You can run it using the following command:

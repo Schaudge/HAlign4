@@ -1,14 +1,12 @@
 #include "Fasta.hpp"
-// Functions for reading and writing .fasta files
+//.fasta读取，写入
 #include <cstring>
 
-// Constructor: reads fasta sequences from input stream
-utils::Fasta::Fasta(std::istream &is)
+utils::Fasta::Fasta(std::istream &is) //读取
 {
     _read(is);
 }
 
-// Function to write fasta sequences to an output stream
 void utils::Fasta::write_to(std::ostream &os, bool with_identification) const
 {
     if (with_identification)
@@ -17,53 +15,48 @@ void utils::Fasta::write_to(std::ostream &os, bool with_identification) const
         write_to(os, sequences.cbegin(), sequences.cend());
 }
 
-// Private function to read fasta file from input stream
-void utils::Fasta::_read(std::istream &is)
+void utils::Fasta::_read(std::istream &is) //读取文件
 {
-    std::string each_line; // Stores each line of input
-    std::string each_sequence; // Stores the current sequence
+    std::string each_line;
+    std::string each_sequence;
     for (bool flag = false; std::getline(is, each_line); )
     {
         if (each_line.size() == 0)
-            continue; // Skip empty lines
+            continue;
 
-        if (each_line[0] == '>') // Header line
+        if (each_line[0] == '>')
         {
-            identifications.emplace_back(each_line.substr(1)); // Extract sequence identifier (without '>')
+            identifications.emplace_back(each_line.substr(1));
             if (flag)
-                sequences.emplace_back(std::move(each_sequence)); // Store the previous sequence if any
+                sequences.emplace_back(std::move(each_sequence));
             flag = true;
-            each_sequence.clear(); // Prepare for a new sequence
         }
-        else if (flag) // Sequence lines
+        else if (flag)
         {
-            each_sequence += each_line; // Concatenate the sequence lines
+            each_sequence += each_line;
         }
     }
-    sequences.emplace_back(each_sequence); // Store the last sequence
+    sequences.emplace_back(each_sequence);
 }
 
-// Function to cut sequence into multiple lines and write to output stream
-void utils::Fasta::cut_and_write(std::ostream &os, const std::string &sequence)
+void utils::Fasta::cut_and_write(std::ostream &os, const std::string &sequence) ////一条长序列分多行写入
 {
     const size_t sequence_length = sequence.size();
 
-    // Allocate buffer for the sequence with line breaks added
     char *cut_sequence = new char[sequence_length + sequence_length / max_line_length + 1];
     size_t des_index = 0;
     for (size_t src_index = 0; src_index < sequence_length; src_index += max_line_length)
     {
-        if (src_index) cut_sequence[des_index++] = '\n'; // Add a newline after each segment
+        if (src_index) cut_sequence[des_index++] = '\n';
 
-        // Determine length to write (either max line length or remaining length)
         size_t write_length = sequence_length - src_index;
         if (write_length > max_line_length) write_length = max_line_length;
 
         memcpy(cut_sequence + des_index, sequence.data() + src_index, write_length);
         des_index += write_length;
     }
-    cut_sequence[des_index] = 0; // Null terminate the string
+    cut_sequence[des_index] = 0;
 
-    os << cut_sequence; // Write the sequence to output stream
-    delete[] cut_sequence; // Free the allocated memory
+    os << cut_sequence;
+    delete[] cut_sequence;
 }
