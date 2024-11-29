@@ -1,20 +1,20 @@
 #pragma once
-//插入gap
+//锟斤拷锟斤拷gap
 #include <cstddef>
 #include <iterator>
 
 namespace utils
 {
-    struct Insertion2   //插入
+    struct Insertion2   
     {
-        size_t index; //索引位置
-        size_t n_num; //从该位置开始有number个n
-        size_t gap_num; //从该位置开始有number个gap
+        size_t index; 
+        size_t n_num; 
+        size_t gap_num; 
     };
-    struct Insertion   //插入
+    struct Insertion   
     {
-        size_t index; //索引位置
-        size_t number; //从该位置开始有number个gap
+        size_t index;
+        size_t number; 
 
         bool operator==(const Insertion &rhs) const noexcept;
 

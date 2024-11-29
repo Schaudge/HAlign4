@@ -16,7 +16,7 @@
 
 namespace suffix_array
 {
-    template<size_t width> //后缀树类
+    template<size_t width> 
     class SuffixArray
     {
     public:
@@ -79,17 +79,17 @@ namespace suffix_array
             return std::move(starts);
         }
 
-        //外调入口，不动
+
         template<typename RandomAccessIterator>
         std::vector<triple> get_common_substrings(RandomAccessIterator first, RandomAccessIterator last, size_t threshold)const
         {
-            std::vector<triple> common_substrings; //三元组向量 用于返回
+            std::vector<triple> common_substrings; 
             const size_t rhs_len = last - first;
             if (rhs_len < threshold)
                 return common_substrings;
             for (size_t rhs_index = 0; rhs_index < rhs_len; )
             {
-                auto found = search_for_prefix(first + rhs_index, last, threshold); //主调，寻找前缀,返回 【length，A.index0，A.index1...】
+                auto found = search_for_prefix(first + rhs_index, last, threshold); 
                 
                 if (found.empty())// || (tag_center && found.size() > 2))
                 {
@@ -99,7 +99,7 @@ namespace suffix_array
                 {
                     //std::cout << found.size() << "\n";
                     for (size_t i = 1; i != found.size(); ++i)
-                        common_substrings.emplace_back(triple({found[i], rhs_index,found[0] })); //common_substrings增加
+                        common_substrings.emplace_back(triple({found[i], rhs_index,found[0] })); 
                     rhs_index += found[0]- threshold + 1;
                     //rhs_index += found[0];
                 }
@@ -108,7 +108,7 @@ namespace suffix_array
             return std::move(common_substrings);
         }
 
-        int find(char now, int start, int end) const//从左到右查
+        int find(char now, int start, int end) const
         {
             for (int i = start; i <= end; i++)
                 if (B[i] == now)
@@ -116,7 +116,7 @@ namespace suffix_array
             return -1;
         }
 
-        int rfind(char now, int start, int end) const//从右到左查
+        int rfind(char now, int start, int end) const
         {
             for (int i = end; i >= start; i--)
                 if (B[i] == now)
@@ -124,17 +124,17 @@ namespace suffix_array
             return -1;
         }
 
-        int O_index_num(int x, char now) const//查找 第几个A
+        int O_index_num(int x, char now) const
         {
             int num, i, quotient = x / dis;
-            if (((x - quotient * dis) <= (dis / 2)) || (quotient == (Osize - 1))) //从quotient向后查
+            if (((x - quotient * dis) <= (dis / 2)) || (quotient == (Osize - 1)))
             {
                 num = O[quotient][(int)now - 1];
                 for (i = quotient * dis + 1; i <= x; i++)
                     if (B[i] == now)
                         num++;
             }
-            else             //从quotient+1向前查
+            else            
             {
                 num = O[quotient + 1][(int)now - 1];
                 for (i = (quotient + 1) * dis; i > x; i--)
@@ -145,7 +145,7 @@ namespace suffix_array
         }
 
     private:
-        //初始化 A逆- reword
+
         template<typename InputIterator>
         unsigned char* _copy_reword(InputIterator first, InputIterator last, unsigned char end_mark)
         {
@@ -182,7 +182,7 @@ namespace suffix_array
         // require s[n]=s[n+1]=s[n+2]=0, n>=2
         void suffixArray(int* s, int* SA, int n, int K) {
             int n0 = (n + 2) / 3, n1 = (n + 1) / 3, n2 = n / 3, n02 = n0 + n2;
-            //n0是字符串中模为的下标的个数，n1，n2依此类推
+        
             int* s12 = new int[n02 + 3]; s12[n02] = s12[n02 + 1] = s12[n02 + 2] = 0;
             int* SA12 = new int[n02 + 3]; SA12[n02] = SA12[n02 + 1] = SA12[n02 + 2] = 0;
             int* s0 = new int[n0];
@@ -191,16 +191,13 @@ namespace suffix_array
             // generatepositions of mod 1 and mod  2 suffixes
             // the"+(n0-n1)" adds a dummy mod 1 suffix if n%3 == 1
             for (int i = 0, j = 0; i < n + (n0 - n1); i++) if (i % 3 != 0) s12[j++] = i;
-            //将所有模不为的下标存入s12中
+    
 
             // lsb radix sortthe mod 1 and mod 2 triples
             radixPass(s12, SA12, s + 2, n02, K);
             radixPass(SA12, s12, s + 1, n02, K);
             radixPass(s12, SA12, s, n02, K);
-            //radixPass实际是一个计数排序
-            //对后缀的前三个字符进行三次计数排序完成了对SA12数组的基数排序
-            //这个排序是初步的，没有将SA12数组真正地排好序，因为：
-            //若SA12数组中几个后缀的前三个字符相等，则起始位置靠后的排在后面
+
 
             // findlexicographic names of triples
             int name = 0, c0 = -1, c1 = -1, c2 = -1;
@@ -208,39 +205,31 @@ namespace suffix_array
                 if (s[SA12[i]] != c0 || s[SA12[i] + 1] != c1 || s[SA12[i] + 2] != c2) {
                     name++; c0 = s[SA12[i]];  c1 = s[SA12[i] + 1];  c2 = s[SA12[i] + 2];
                 }
-                //name是计算后缀数组SA12中前三个字符不完全相同的后缀个数
-                //这么判断的原因是：SA12有序，故只有相邻后缀的前三个字符才可能相同
+
                 if (SA12[i] % 3 == 1) { s12[SA12[i] / 3] = name; }// left half
                 else { s12[SA12[i] / 3 + n0] = name; } // right half
-                 //SA12[i]模不是就是，s12保存的是后缀数组SA12中前三个字符的排位
+   
             }
 
             // recurse if namesare not yet unique
             if (name < n02) {
-                //如果name等于n02，意味着SA12前三个字母均不相等，即SA12已有序
-                //否则，根据s12的后缀数组与SA12等价，对s12的后缀数组进行排序即可
+    
                 suffixArray(s12, SA12, n02, name);
                 // store uniquenames in s12 using the suffix array
                 for (int i = 0; i < n02; i++) s12[SA12[i]] = i + 1;
             }
             else // generate the suffix array of s12 directly
                 for (int i = 0; i < n02; i++) SA12[s12[i] - 1] = i;
-            //s12保存的是后缀数组SA12中前三个字符的排位
-            //在所有后缀前三个字符都不一样的情况下，s12就是后缀的排位
 
-            //至此SA12排序完毕
-            //SA12[i]是第i小的后缀的序号(序号从到n02)，s12[i]是序号为i的后缀的排位
-            //使用后缀序号而不是实际位置的原因是递归调用suffixArray时不能保留该信息
+
+
 
             // stably sort themod 0 suffixes from SA12 by their first character
             for (int i = 0, j = 0; i < n02; i++) if (SA12[i] < n0) s0[j++] = 3 * SA12[i];
-            //将SA12中所有的模为的后缀的实际位置减去按序存储在s0中
-            //注意后缀序号到实际位置的转化需将前者乘
-            //这意味着首先已经利用模为的后缀对SA0进行了初步排序
-            //只需要采用一次计数排序即可对SA0完成基数排序的最后一步
+
             radixPass(s0, SA0, s, n0, K);
 
-            //最后一步，对有序表SA12和SA0进行归并
+
             // merge sorted SA0suffixes and sorted SA12 suffixes
             for (int p = 0, t = n0 - n1, k = 0; k < n; k++) {
 #define GetI() (SA12[t] < n0 ? SA12[t] * 3 + 1 : (SA12[t] - n0) *3 + 2)
@@ -275,7 +264,7 @@ namespace suffix_array
             delete[] s;
             return sa;
         }
-        //初始化，最后一列B，ACGT在F列的断点begin，#在B中的位置，对B隔dis段计数O
+
         int build_b()
         {
             quadra* o = new quadra[length / dis + 2]();
@@ -299,10 +288,10 @@ namespace suffix_array
             _begin[1] = num[0] + 1;
             _begin[2] = num[0] + num[1] + 1;
             _begin[3] = num[0] + num[1] + num[2] + 1;
-            B = b;  //初始化B
-            begin = _begin; //初始化begin断点
+            B = b;  
+            begin = _begin; 
             O = o;
-            return e; //初始化 end #位置
+            return e; 
         }
     private:
         using quadra = std::array<int32_t, 4>;
@@ -311,9 +300,9 @@ namespace suffix_array
         int Osize;
     public:
         const size_t length;                        // including the ending '$'
-        const unsigned char* reword;          // 原串逆+'$'
-        int32_t* SA;                              //后缀数组
-        const unsigned char* B;               //L列
+        const unsigned char* reword;          
+        int32_t* SA;                              
+        const unsigned char* B;            
         const quadra* O;
         const int* begin;
     };

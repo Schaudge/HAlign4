@@ -1,5 +1,5 @@
 #pragma once
-#include "../SuffixArray/SuffixArray.hpp"  //利用后缀树
+#include "../SuffixArray/SuffixArray.hpp"  
 #include "../Utils/Utils.hpp"
 #include "../multi-thread/multi.hpp"
 
@@ -9,10 +9,10 @@
 #include<algorithm>
 
 
-namespace star_alignment //星比对命名空间
+namespace star_alignment
 {
 
-    class StarAligner//星比对类
+    class StarAligner
     {
     private:
         using triple = std::array<size_t, 3>;

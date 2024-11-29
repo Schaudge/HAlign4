@@ -63,7 +63,7 @@ void star_alignment::StarAligner::_get_gaps() const
 auto star_alignment::StarAligner::_pairwise_align() const -> std::vector<std::array<std::vector<utils::Insertion>, 2>>
 {
 
-    suffix_array::SuffixArray<nucleic_acid_pseudo::NUMBER> st(_sequences[_centre].cbegin(), _sequences[_centre].cend(),nucleic_acid_pseudo::end_mark);//ÊµÀý»¯ºó×ºÊ÷¶ÔÏóst£¬±È¶ÔÍ¬Ô´ÇøÓò
+    suffix_array::SuffixArray<nucleic_acid_pseudo::NUMBER> st(_sequences[_centre].cbegin(), _sequences[_centre].cend(),nucleic_acid_pseudo::end_mark);//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½stï¿½ï¿½ï¿½È¶ï¿½Í¬Ô´ï¿½ï¿½ï¿½ï¿½
     std::vector<std::array<std::vector<utils::Insertion>, 2>> all_pairwise_gaps;
     //!!!
     wfa::WFAlignerGapAffine aligner(2, 3, 1, wfa::WFAligner::Alignment, wfa::WFAligner::MemoryHigh);
@@ -113,7 +113,7 @@ auto star_alignment::StarAligner::_pairwise_align() const -> std::vector<std::ar
             //std::cout << i<<"\t" << centre_begin << "\t" << centre_end << "\t" << sequence_begin << "\t" << sequence_end << "\n";
             //std::cout << i << "\t" << centre_end-centre_begin <<  "\t"  << sequence_end-sequence_begin << "\n";
 
-            auto [lhs_gaps, rhs_gaps] = mywfa(aligner, _sequences[_centre], centre_begin, centre_end,  //·ÇÍ¬Ô´ÇøÓò£¬¶¯Ì¬¹æ»®±È¶Ô
+            auto [lhs_gaps, rhs_gaps] = mywfa(aligner, _sequences[_centre], centre_begin, centre_end,  //ï¿½ï¿½Í¬Ô´ï¿½ï¿½ï¿½ò£¬¶ï¿½Ì¬ï¿½æ»®ï¿½È¶ï¿½
                 _sequences[i], sequence_begin, sequence_end);
 
             int an = 0, bn = 0;
@@ -319,13 +319,13 @@ auto star_alignment::StarAligner::_insert_gaps(const std::vector<std::vector<uti
 void star_alignment::StarAligner::mul_pairwise_align() const
 {
     cout_cur_time();
-    const auto align_1 = std::chrono::high_resolution_clock::now(); //¼ÇÂ¼±È¶ÔÆðÊ¼Ê±¼ä
+    const auto align_1 = std::chrono::high_resolution_clock::now(); //ï¿½ï¿½Â¼ï¿½È¶ï¿½ï¿½ï¿½Ê¼Ê±ï¿½ï¿½
     std::cout << "Start: build Suffix Array No." << _centre << "\n";
-    suffix_array::SuffixArray<nucleic_acid_pseudo::NUMBER> st(_sequences[_centre].cbegin(), _sequences[_centre].cend(), nucleic_acid_pseudo::end_mark);//ÊµÀý»¯ºó×ºÊ÷¶ÔÏóst£¬±È¶ÔÍ¬Ô´ÇøÓò
-    //size_t peakMem2 = get_peak_memory(); // »ñÈ¡±»²âÊÔ´úÂëÖ´ÐÐºóµ±Ç°½ø³ÌµÄÄÚ´æÕ¼ÓÃ·åÖµ
+    suffix_array::SuffixArray<nucleic_acid_pseudo::NUMBER> st(_sequences[_centre].cbegin(), _sequences[_centre].cend(), nucleic_acid_pseudo::end_mark);//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½stï¿½ï¿½ï¿½È¶ï¿½Í¬Ô´ï¿½ï¿½ï¿½ï¿½
+    //size_t peakMem2 = get_peak_memory(); // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Ö´ï¿½Ðºï¿½Ç°ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ú´ï¿½Õ¼ï¿½Ã·ï¿½Öµ
     cout_cur_time();
     std::cout << "End  : build Suffix Array " << (std::chrono::high_resolution_clock::now() - align_1)<<"\n";
-    std::vector<std::array<std::vector<utils::Insertion>, 2>> pairwise_gaps(_row); //¶¨Òå±äÁ¿-½ÓÊÕ½á¹û
+    std::vector<std::array<std::vector<utils::Insertion>, 2>> pairwise_gaps(_row); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½ï¿½Õ½ï¿½ï¿½
 
     //for (int i = 0; i < threadPool0->Thread_num; i++)
     //    threadMAP[threadPool0->workers[i].get_id()] = new wfa::WFAlignerGapAffine(2, 3, 1, wfa::WFAligner::Alignment, wfa::WFAligner::MemoryUltralow);
@@ -425,7 +425,7 @@ void star_alignment::StarAligner::mul_pairwise_align() const
             sequence_addition.cbegin(), sequence_addition.cend(),
             std::back_inserter(indels_of_current_sequence));
     }
-    //return std::move(all_pairwise_gaps); //Ë«ÐòÁÐ±È¶ÔµÃµ½µÄÁ½Á½gap£¬³¤¶ÈÎªnµÄvector£¬Ã¿¸öÔªËØÓÐ³¤¶ÈÎª2µÄarray£¬Ã¿¸öÔªËØÊÇÓÐÈô¸É¸öInsertionµÄvector
+    //return std::move(all_pairwise_gaps);
 }
 
 void star_alignment::StarAligner::mul_fasta_func(int i, const suffix_array::SuffixArray<nucleic_acid_pseudo::NUMBER>& st,
@@ -477,11 +477,11 @@ void star_alignment::StarAligner::mul_fasta_func(int i, const suffix_array::Suff
         //std::cout << i<<"\t" << centre_begin << "\t" << centre_end << "\t" << sequence_begin << "\t" << sequence_end << "\n";
         //std::cout << i << "\t" << centre_end - centre_begin << "\t" << sequence_end - sequence_begin << "\n";
 
-        auto [lhs_gaps, rhs_gaps] = mywfa(aligner, _sequences[_centre], centre_begin, centre_end,  //·ÇÍ¬Ô´ÇøÓò£¬¶¯Ì¬¹æ»®±È¶Ô
+        auto [lhs_gaps, rhs_gaps] = mywfa(aligner, _sequences[_centre], centre_begin, centre_end,  
             _sequences[i], sequence_begin, sequence_end);
 
-        //auto [lhs_gaps, rhs_gaps] = kband->PSA_AGP_Kband3(_sequences[_centre], centre_begin, centre_end,  //·ÇÍ¬Ô´ÇøÓò£¬¶¯Ì¬¹æ»®±È¶Ô
-        //    _sequences[i], sequence_begin, sequence_end); //·ÖÖÎµ½±ÈthreshÐ¡£¬È»ºók-band
+        //auto [lhs_gaps, rhs_gaps] = kband->PSA_AGP_Kband3(_sequences[_centre], centre_begin, centre_end, 
+        //    _sequences[i], sequence_begin, sequence_end); 
 
         int an = 0, bn = 0;
         for (int ii = 0; ii < lhs_gaps.size(); ii++)
@@ -535,11 +535,10 @@ std::vector<int> star_alignment::StarAligner::_trace_back_bp(const std::vector<t
             j--;
         }
     }
-    reverse(ansi.begin(), ansi.end());//·´×ª
-    return ansi;
+    reverse(ansi.begin(), ansi.end());
 }
-//µÚ¶þ²½£¬ÒÀ¾Ý¶¯Ì¬¹æ»®£¬Ñ¡³öºÏÊÊµÄ²»ÖØµþµÄÍ¬Ô´Çø¶Î
-auto star_alignment::StarAligner::_optimal_path_bp(const std::vector<triple>& optimal_common_substrings) //×îÓÅÂ·¾¶
+
+auto star_alignment::StarAligner::_optimal_path_bp(const std::vector<triple>& optimal_common_substrings)
 -> std::vector<triple>
 {
     std::vector<triple> ans_common_substrings;

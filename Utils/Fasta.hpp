@@ -1,5 +1,5 @@
 #pragma once
-//.fasta读取，写入
+//.fasta锟斤拷取锟斤拷写锟斤拷
 #include <string>
 #include <vector>
 #include <iostream>
@@ -10,10 +10,10 @@ namespace utils
     class Fasta
     {
     private:
-        void _read(std::istream &is);//读取文件
+        void _read(std::istream &is);
 
     public:
-        static constexpr unsigned max_line_length = 80; //一行最长
+        static constexpr unsigned max_line_length = 80; 
 
         std::vector<std::string> sequences;
         std::vector<std::string> identifications;
@@ -40,7 +40,7 @@ namespace utils
         }
 
         template<typename InputIterator1, typename InputIterator2>
-        static void write_to(std::ostream &os, InputIterator1 sequence_first, InputIterator1 sequence_last, //写入文件
+        static void write_to(std::ostream &os, InputIterator1 sequence_first, InputIterator1 sequence_last, 
                 InputIterator2 identification_first)
         {
             if (sequence_first == sequence_last) return;

@@ -1,5 +1,4 @@
 #include "Arguments.hpp"
-////输入输出路径，参数
 //std::string arguments::in_file_name = "/home/zqzhoutong/stmsa-BWT/data/people13.fasta";
 //std::string arguments::out_file_name = "/home/zqzhoutong/stmsa-BWT/data/test/people13ed.fasta";
 std::string arguments::in_file_name;

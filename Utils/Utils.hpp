@@ -1,5 +1,5 @@
 #pragma once
-//¶ÁÈë£¬Ð´»Ø£¬Ô¤´¦Àí£¬ºó´¦Àí£¬Í³Ò»»¯
+
 #include "Fasta.hpp"
 #include "Pseudo.hpp"
 #include "Insertion.hpp"
@@ -49,7 +49,7 @@ void getFiles_linux(std::string path, std::vector<std::string>& filenames);
 #undef min
 void cout_cur_time();
 size_t getPeakRSS();
-//²âÊÔÄÚ´æ·åÖµ
+
 inline void GetMemoryUsage()
 {
     int mem = getPeakRSS() / 1024.0 / 1024.0;
@@ -63,9 +63,9 @@ namespace utils
     struct MAF_info
     {
         std::string path;
-        int thresh1; //³¤¶È100
-        int thresh2; //ÌõÊý1
-        int thresh3; //·ÖÊý95
+        int thresh1;
+        int thresh2; 
+        int thresh3; 
     };
     struct block
     {
@@ -111,32 +111,32 @@ namespace utils
     struct MAF_block
     {
         float score;
-        int tag_num;  //¼ÇÂ¼ÓÐtagµÄÁÐÊý£¬Á¬ÐøÐÔ
+        int tag_num; 
         std::vector<block> seq;
     };
-    std::string remove_white_spaces(const std::string &str); //È¥µô¿Õ¸ñ
+    std::string remove_white_spaces(const std::string &str);
 
-    unsigned char to_pseudo(char c); //Ô¤´¦Àí£¬char->int
+    unsigned char to_pseudo(char c); 
 
     std::vector<unsigned char> to_pseudo(const std::string &str);
     std::string from_pseudo(const std::vector<unsigned char> &pseu);
 
     template<typename InputIterator, typename OutputIterator>
-    void transform_to_pseudo(InputIterator src_first, InputIterator src_last, OutputIterator des)   //Ô¤´¦Àí£¬char->int
+    void transform_to_pseudo(InputIterator src_first, InputIterator src_last, OutputIterator des) 
     {
         std::vector<unsigned char> (*op)(const std::string &) = &to_pseudo;
         std::transform(src_first, src_last, des, op);
     }
 
     template<typename InputIterator, typename OutputIterator>
-    void transform_from_pseudo(InputIterator src_first, InputIterator src_last, OutputIterator des) //ºó´¦Àí£¬int->char
+    void transform_from_pseudo(InputIterator src_first, InputIterator src_last, OutputIterator des)
     {
         std::string (*op)(const std::vector<unsigned char> &) = &from_pseudo;
         std::transform(src_first, src_last, des, op);
     }
 
     template<typename InputIterator>
-    InputIterator iter_of_max(InputIterator first, InputIterator last) //ÕÒµ½×î´óµÄÔªËØ
+    InputIterator iter_of_max(InputIterator first, InputIterator last) 
     {
         auto result = first;
 
@@ -146,14 +146,14 @@ namespace utils
 
     std::vector<std::vector<unsigned char>> read_to_pseudo(std::istream& is, std::string& center_name, int& II, int& center_);
     unsigned char* copy_DNA(const std::vector<unsigned char>& sequence, unsigned char* A, size_t a_begin, size_t a_end);
-    void insert_and_write(std::ostream &os, std::istream &is, const std::vector<std::vector<Insertion>> &insertions); //Ô­ÎÄ¼þÐ´»Ø±È¶Ô½á¹û
+    void insert_and_write(std::ostream &os, std::istream &is, const std::vector<std::vector<Insertion>> &insertions); //Ô­ï¿½Ä¼ï¿½Ð´ï¿½Ø±È¶Ô½ï¿½ï¿½
     void write_to_fasta(std::ostream& os, std::istream& is, std::vector<std::vector<Insertion>>& insertions, size_t& II);
-    void insert_and_write_file(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences, std::vector<std::vector<Insertion>>& insertions, const std::vector<std::vector<Insertion>>& N_insertions, std::vector<std::string>& name, std::vector<bool>& sign); //Ð´»Ø±È¶Ô½á¹û
+    void insert_and_write_file(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences, std::vector<std::vector<Insertion>>& insertions, const std::vector<std::vector<Insertion>>& N_insertions, std::vector<std::string>& name, std::vector<bool>& sign); //Ð´ï¿½Ø±È¶Ô½ï¿½ï¿½
     int* vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequences, std::vector<std::vector<Insertion>>& insertions, const std::vector<std::vector<Insertion>>& N_insertions);
     void write_to_str(std::string& ans, std::string& each_sequence, std::vector<Insertion>& insertions);
-    void insert_and_write_fasta(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences, std::vector<std::vector<Insertion>>& insertions, std::vector<std::vector<Insertion>>& N_insertions, std::vector<std::string>& name, bool TU);//Ð´»Øfasta
+    void insert_and_write_fasta(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences, std::vector<std::vector<Insertion>>& insertions, std::vector<std::vector<Insertion>>& N_insertions, std::vector<std::string>& name, bool TU);//Ð´ï¿½ï¿½fasta
     template<typename InputIterator>
-    static void cut_and_write(std::ostream &os, InputIterator first, InputIterator last) //Ò»Ìõ³¤ÐòÁÐ·Ö¶àÐÐÐ´Èë
+    static void cut_and_write(std::ostream &os, InputIterator first, InputIterator last) //Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·Ö¶ï¿½ï¿½ï¿½Ð´ï¿½ï¿½
     {
         const size_t sequence_length = std::distance(first, last);
 
@@ -175,7 +175,7 @@ namespace utils
 int my_mk_dir(std::string output_dir);
 
 template<typename Representation, typename Period>
-std::ostream &operator<<(std::ostream &os, std::chrono::duration<Representation, Period> duration) //Ê±¼äÏûºÄ
+std::ostream &operator<<(std::ostream &os, std::chrono::duration<Representation, Period> duration) //Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << "ms";
     return os;

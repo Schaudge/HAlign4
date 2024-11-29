@@ -1,5 +1,4 @@
 #pragma once
-//¼î»ù±àºÅ
 namespace nucleic_acid_pseudo
 {  
     constexpr unsigned char end_mark = 0;

@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
 {
     SmpCommandLine userCommands(argc, argv);
     threadPool0 = NULL;
-    int center = -1;//默认-1；
+    int center = -1;
     std::string center_name = "";
-    const auto start_point = std::chrono::high_resolution_clock::now(); //记录总起始时间
+    const auto start_point = std::chrono::high_resolution_clock::now(); 
     int thresh1 = 15;  
     int numThreads = 1;
     // Firstly extract all flagged argumants (i.e. argument identified by a leading hyphen flag)
@@ -32,7 +32,6 @@ int main(int argc, char* argv[])
     if (userCommands.helpMessageWanted() || argc == 1)
     {
         userCommands.showHelpMessage();
-        std::cout << "http://lab.malab.cn/soft/halign/\n";
         exit(0);
     }
 
@@ -40,7 +39,6 @@ int main(int argc, char* argv[])
     {
         userCommands.showHelpMessage();
         std::cout << "\n";
-        std::cout << "http://lab.malab.cn/soft/halign/\n";
         std::cout << "Insufficient input parameter!\n";
         exit(1);
     }
@@ -111,14 +109,14 @@ int main(int argc, char* argv[])
     }
     else if (arguments::in_file_name.substr(arguments::in_file_name.find_last_of('.') + 1, 2) == "fa")
     {
-        std::ifstream ifs(arguments::in_file_name, std::ios::binary | std::ios::in); //判断输入路径合法否
+        std::ifstream ifs(arguments::in_file_name, std::ios::binary | std::ios::in); 
         if (!ifs)
         {
             std::cout << "cannot access file " << arguments::in_file_name << '\n';
             exit(0);
         }
         std::cout << "1 files\n";
-        pseudo_sequences = utils::read_to_pseudo(ifs, center_name, II, center);  //读入数据
+        pseudo_sequences = utils::read_to_pseudo(ifs, center_name, II, center);  
         ifs.clear();
     }
     std::cout << "                    | Info : read consumes : " << (std::chrono::high_resolution_clock::now() - read_T) << "\n";
@@ -127,21 +125,21 @@ int main(int argc, char* argv[])
     if (pseudo_sequences.size() < 2)
     {
         std::cout << "The number of input sequences is less than two!\n";
-        exit(1);  //数据w条数少于2，退出
+        exit(1);  
     }
 
-    const auto align_start = std::chrono::high_resolution_clock::now(); //记录比对起始时间
+    const auto align_start = std::chrono::high_resolution_clock::now(); 
     std::vector<std::vector<utils::Insertion>> insertions(pseudo_sequences.size());
-    star_alignment::StarAligner::get_gaps(insertions, pseudo_sequences,thresh1, center);   //****MSA比对过程，insertions记录比对结果
+    star_alignment::StarAligner::get_gaps(insertions, pseudo_sequences,thresh1, center);  
     //std::vector<std::string>().swap(name);
-    std::cout << "                    | Info : align time consumes : " << (std::chrono::high_resolution_clock::now() - align_start) << "\n"; //输出比对耗费时间
-    std::cout << "                    | Info : align memory peak   : " << getPeakRSS() << " B\n";//输出内存耗费
+    std::cout << "                    | Info : align time consumes : " << (std::chrono::high_resolution_clock::now() - align_start) << "\n";
+    std::cout << "                    | Info : align memory peak   : " << getPeakRSS() << " B\n";
     
-    const auto INSERT_T = std::chrono::high_resolution_clock::now(); //记录比对起始时间
+    const auto INSERT_T = std::chrono::high_resolution_clock::now(); 
     size_t JJ = 0;
     if (arguments::out_file_name.substr(arguments::out_file_name.find_last_of('.') + 1, 2) == "fa")
     {
-        std::ofstream ofs(arguments::out_file_name, std::ios::binary | std::ios::out); //判断输出路径合法否
+        std::ofstream ofs(arguments::out_file_name, std::ios::binary | std::ios::out); 
         if (!ofs)
         {
             std::cout << "cannot write file " << arguments::out_file_name << '\n';
@@ -166,8 +164,8 @@ int main(int argc, char* argv[])
         }
         else if (arguments::in_file_name.substr(arguments::in_file_name.find_last_of('.') + 1, 2) == "fa")
         {
-            std::ifstream ifs(arguments::in_file_name, std::ios::binary | std::ios::in); //判断输入路径合法否
-            utils::write_to_fasta(ofs, ifs, insertions,JJ);  //读入数据
+            std::ifstream ifs(arguments::in_file_name, std::ios::binary | std::ios::in); 
+            utils::write_to_fasta(ofs, ifs, insertions,JJ);  
             ifs.clear();
         }
         ofs.close();
@@ -176,9 +174,7 @@ int main(int argc, char* argv[])
 
 
     std::cout << "                    | Info : Current pid   : " << getpid() << std::endl;
-    std::cout << "                    | Info : Time consumes : " << (std::chrono::high_resolution_clock::now() - start_point) << "\n"; //输出总耗费时间
-    std::cout << "                    | Info : Memory usage  : " << getPeakRSS() << " B" << std::endl;//输出内存耗费
-    std::cout << "                    | Info : Finished\n";
-    std::cout << "http://lab.malab.cn/soft/halign/\n";
+    std::cout << "                    | Info : Time consumes : " << (std::chrono::high_resolution_clock::now() - start_point) << "\n"; 
+    std::cout << "                    | Info : Memory usage  : " << getPeakRSS() << " B" << std::endl;
     return 0;
 }

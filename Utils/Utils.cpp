@@ -29,7 +29,7 @@ int my_mk_dir(std::string output_dir)
     else
         return 0;
 #elif defined(__unix__) || defined(__unix) || defined(unix)
-    if (access(output_dir.c_str(), F_OK) == -1) //如果文件夹不存在
+    if (access(output_dir.c_str(), F_OK) == -1) 
     {
         return mkdir(output_dir.c_str(), S_IRWXU | S_IRUSR | S_IWUSR | S_IXUSR | S_IRWXG | S_IRWXO);
     }
@@ -43,7 +43,6 @@ int my_mk_dir(std::string output_dir)
 void cout_cur_time()
 {
     auto now = std::chrono::system_clock::now();
-    //通过不同精度获取相差的毫秒数
     uint64_t dis_millseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count()
         - std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count() * 1000;
     time_t tt = std::chrono::system_clock::to_time_t(now);
@@ -94,17 +93,16 @@ size_t getPeakRSS()
 #if defined(_WIN32)
 void getFiles_win(std::string path, std::vector<std::string>& files)
 {
-    //文件句柄
+
     intptr_t hFile = 0;
-    //文件信息
+
     struct _finddata_t fileinfo;
     std::string p;
     if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1)
     {
         do
         {
-            //如果是目录,迭代之
-            //如果不是,加入列表
+
             if ((fileinfo.attrib & _A_SUBDIR))
             {
                 if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0)
@@ -138,19 +136,19 @@ void getFiles_linux(std::string path, std::vector<std::string>& filenames)
 
 int NSCORE = 0;
 int HOXD70[6][6] = { {},{0,91,-114,-31,-123,NSCORE},{0,-114,100,-125,-31,NSCORE},{0,-31,-125,100,-114,NSCORE},
-    {0,-123,-31,-114,91,NSCORE},{0,NSCORE,NSCORE,NSCORE,NSCORE,NSCORE} };//评分矩阵
+    {0,-123,-31,-114,91,NSCORE},{0,NSCORE,NSCORE,NSCORE,NSCORE,NSCORE} };
 int cs[8] = { 0,91,100,100,91,0,0,0 };
-int d = 400, e = 30; //首个gap和后续gap
+int d = 400, e = 30; 
 int stop_g = 5;
 std::vector<unsigned char> ACGT = { nucleic_acid_pseudo::A ,nucleic_acid_pseudo::C ,nucleic_acid_pseudo::G ,nucleic_acid_pseudo::T };
 
-std::string utils::remove_white_spaces(const std::string& str) //去除空格
+std::string utils::remove_white_spaces(const std::string& str) 
 {
     static const std::regex white_spaces("\\s+");
     return std::regex_replace(str, white_spaces, "");
 }
 
-std::vector<unsigned char> utils::to_pseudo(const std::string& str)//预处理，char->int
+std::vector<unsigned char> utils::to_pseudo(const std::string& str)
 {
     std::vector<unsigned char> pseu;
     pseu.reserve((size_t)(str.size() * 1.3));
@@ -166,7 +164,7 @@ std::vector<unsigned char> utils::to_pseudo(const std::string& str)//预处理�
     return pseu;
 }
 
-std::string utils::from_pseudo(const std::vector<unsigned char>& pseu)//后处理，int->char
+std::string utils::from_pseudo(const std::vector<unsigned char>& pseu)
 {
     static constexpr char map[nucleic_acid_pseudo::NUMBER]{ '-', 'c', 'g', 'a', 't', 'n' };
 
@@ -177,7 +175,7 @@ std::string utils::from_pseudo(const std::vector<unsigned char>& pseu)//后处�
     return str;
 }
 
-unsigned char* _get_map() //统一DNA/RNA 及大小写
+unsigned char* _get_map() 
 {
     using namespace nucleic_acid_pseudo;
 
@@ -196,12 +194,12 @@ unsigned char* _get_map() //统一DNA/RNA 及大小写
 
 static const unsigned char* _map = _get_map();
 
-unsigned char utils::to_pseudo(char ch)  //预处理，char->int
+unsigned char utils::to_pseudo(char ch)  
 {
     return _map[ch];
 }
 
-std::vector<std::vector<unsigned char>> utils::read_to_pseudo(std::istream& is, std::string& center_name, int& II, int& center_) //读入数据
+std::vector<std::vector<unsigned char>> utils::read_to_pseudo(std::istream& is, std::string& center_name, int& II, int& center_) 
 {
     std::vector<std::vector<unsigned char>> sequences;
 
@@ -209,13 +207,13 @@ std::vector<std::vector<unsigned char>> utils::read_to_pseudo(std::istream& is, 
     std::string each_sequence;
     for (bool flag = false; std::getline(is, each_line); )
     {
-        if (each_line.size() == 0 || (each_line.size() == 1 && (int)each_line[0] == 13)) //跳过空行
+        if (each_line.size() == 0 || (each_line.size() == 1 && (int)each_line[0] == 13)) 
             continue;
 
         if (each_line[0] == '>')
         {
             each_line.erase(0, 1);
-            if ((int)(*each_line.rbegin()) == 13)//回车 '\r'
+            if ((int)(*each_line.rbegin()) == 13)
                 each_line.pop_back();
             each_line.erase(std::remove_if(each_line.begin(), each_line.end(), [](char c) {
                 return (c == ' ' || c == '\t');
@@ -239,7 +237,7 @@ std::vector<std::vector<unsigned char>> utils::read_to_pseudo(std::istream& is, 
     }
 
     sequences.emplace_back(to_pseudo(each_sequence));
-    return sequences;  //返回sequences序列数据
+    return sequences; 
 }
 
 void insert_others(utils::Insertion2 That, utils::Insertion2 This, std::vector<std::vector<utils::Insertion2>>& more_insertions,
@@ -276,13 +274,12 @@ void insert_others(utils::Insertion2 That, utils::Insertion2 This, std::vector<s
     }
 }
 
-//对于小内存，开不了大链表，按拉长fasta输出,按文件写回来插入new_zhou,完成后直接结束
+
 void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences,
     std::vector<std::vector<Insertion>>& insertions, const std::vector<std::vector<Insertion>>& N_insertions,
     std::vector<std::string>& name, std::vector<bool>& sign)
-    //写回比对结果
 {
-    //新版插入，带N
+
     std::string each_sequence, each_line;
     const size_t sequence_number = insertions.size();
     std::vector<std::vector<Insertion2>> all_insertions;
@@ -300,15 +297,15 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
     {
         i = 0; j = 0; g_num = 0;
         for (int kk = 0; kk < sequence_number; kk++) ii[kk] = 0;
-        std::vector<Insertion2>().swap(i_all_insertions);//清空 i_all_insertions
+        std::vector<Insertion2>().swap(i_all_insertions);
         while (i < insertions[k].size() && j < N_insertions[k].size())
         {
-            if (insertions[k][i].index == N_insertions[k][j].index)//相等变number
+            if (insertions[k][i].index == N_insertions[k][j].index)
             {
                 g_num += insertions[k][i].number;
                 if (N_insertions[k][j].number > insertions[k][i].number)
                 {
-                    i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index ,insertions[k][i].number, 0 }));  //gap 个 N
+                    i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index ,insertions[k][i].number, 0 })); 
                     insert_others(Insertion2({ insertions[k][i].index + g_num ,N_insertions[k][j].number - insertions[k][i].number, 0 }), utils::Insertion2({ insertions[k][i].index + g_num ,0, N_insertions[k][j].number - insertions[k][i].number }), more_insertions, k, sequence_number, ii);
                 }
                 else
@@ -318,7 +315,7 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
                 i++;
                 j++;
             }
-            else if (insertions[k][i].index > N_insertions[k][j].index) //不等插新
+            else if (insertions[k][i].index > N_insertions[k][j].index) 
             {
                 insert_others(Insertion2({ N_insertions[k][j].index + g_num ,N_insertions[k][j].number, 0 }), utils::Insertion2({ N_insertions[k][j].index + g_num ,0, N_insertions[k][j].number }), more_insertions, k, sequence_number, ii);
                 j++;
@@ -330,12 +327,12 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
                 i++;
             }
         }
-        while (j < N_insertions[k].size()) //后续多余的N，继续插入
+        while (j < N_insertions[k].size()) 
         {
             insert_others(Insertion2({ N_insertions[k][j].index + g_num ,N_insertions[k][j].number, 0 }), utils::Insertion2({ N_insertions[k][j].index + g_num ,0, N_insertions[k][j].number }), more_insertions, k, sequence_number, ii);
             j++;
         }
-        while (i < insertions[k].size()) //后续多余的gap，继续插入
+        while (i < insertions[k].size()) 
         {
             g_num += insertions[k][i].number;
             i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index, 0,insertions[k][i].number }));
@@ -386,7 +383,6 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
         std::cout << k<<"\n";
     }*/
 
-    //消除  一列多个N导致de多个插空
     int min_size, min_i;
     std::vector<Insertion> multi;
     std::vector<Insertion> tmp;
@@ -455,7 +451,7 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
             multi = tmp;
         }
 
-    //插入到原串
+
     for (i = 0; i < sequence_number; i++)
     {
         if (sign[i]) os << "> " << name[i] << " + " << "\n";
@@ -476,7 +472,7 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
         std::ifstream tmpi(arguments::tmp_file_name, std::ios::binary | std::ios::in);
         while (std::getline(tmpi, each_line))
         {
-            if (each_line.size() == 0 || (each_line.size() == 1 && (int)each_line[0] == 13)) //跳过空行
+            if (each_line.size() == 0 || (each_line.size() == 1 && (int)each_line[0] == 13)) 
                 continue;
             each_sequence += each_line;
             if ((int)(*each_line.rbegin()) == 13)
@@ -509,7 +505,7 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
         os << "\n";
     }os << "\n";
     remove(arguments::tmp_file_name.data());
-    //释放空间
+
     /*std::vector<std::vector<Insertion2>>().swap(all_insertions);
     std::vector<Insertion2>().swap(i_all_insertions);
     std::vector<std::vector<Insertion2>>().swap(more_insertions);
@@ -518,7 +514,7 @@ void utils::insert_and_write_file(std::ostream& os, std::vector<std::vector<unsi
     delete[] ii;*/
 }
 
-//对于小内存，不可以开大链表，按重写入vector来插入N和gap
+
 int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequences, 
     std::vector<std::vector<Insertion>>& insertions, const std::vector<std::vector<Insertion>>& N_insertions) //写回比对结果
 {
@@ -536,20 +532,20 @@ int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequ
     for (i = 0; i < sequence_number; i++)
         for (j = 0; j < N_insertions[i].size(); j++)
             len_sequences[i] += N_insertions[i][j].number;
-    //变insertions
+
     for (int k = 0; k < sequence_number; k++)
     {
         i = 0; j = 0; g_num = 0;
         for (int kk = 0; kk < sequence_number; kk++) ii[kk] = 0;
-        std::vector<Insertion2>().swap(i_all_insertions);//清空 i_all_insertions
+        std::vector<Insertion2>().swap(i_all_insertions);
         while (i < insertions[k].size() && j < N_insertions[k].size())
         {
-            if (insertions[k][i].index == N_insertions[k][j].index)//相等变number
+            if (insertions[k][i].index == N_insertions[k][j].index)
             {
                 g_num += insertions[k][i].number;
                 if (N_insertions[k][j].number > insertions[k][i].number)
                 {
-                    i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index ,insertions[k][i].number, 0 }));  //gap 个 N
+                    i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index ,insertions[k][i].number, 0 }));  
                     insert_others(Insertion2({ insertions[k][i].index + g_num ,N_insertions[k][j].number - insertions[k][i].number, 0 }), utils::Insertion2({ insertions[k][i].index + g_num ,0, N_insertions[k][j].number - insertions[k][i].number }), more_insertions, k, sequence_number, ii);
                 }
                 else
@@ -559,7 +555,7 @@ int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequ
                 i++;
                 j++;
             }
-            else if (insertions[k][i].index > N_insertions[k][j].index) //不等插新
+            else if (insertions[k][i].index > N_insertions[k][j].index) 
             {
                 insert_others(Insertion2({ N_insertions[k][j].index + g_num ,N_insertions[k][j].number, 0 }), utils::Insertion2({ N_insertions[k][j].index + g_num ,0, N_insertions[k][j].number }), more_insertions, k, sequence_number, ii);
                 j++;
@@ -571,12 +567,12 @@ int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequ
                 i++;
             }
         }
-        while (j < N_insertions[k].size()) //后续多余的N，继续插入
+        while (j < N_insertions[k].size()) 
         {
             insert_others(Insertion2({ N_insertions[k][j].index + g_num ,N_insertions[k][j].number, 0 }), utils::Insertion2({ N_insertions[k][j].index + g_num ,0, N_insertions[k][j].number }), more_insertions, k, sequence_number, ii);
             j++;
         }
-        while (i < insertions[k].size()) //后续多余的gap，继续插入
+        while (i < insertions[k].size()) 
         {
             g_num += insertions[k][i].number;
             i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index, 0,insertions[k][i].number }));
@@ -751,7 +747,7 @@ int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequ
 
     }
 
-    //释放空间
+
     std::vector<unsigned char>().swap(tmp_vector);
     std::vector<std::vector<Insertion2>>().swap(all_insertions);
     std::vector<Insertion2>().swap(i_all_insertions);
@@ -763,15 +759,15 @@ int* utils::vector_insertion_gap_N(std::vector<std::vector<unsigned char>>& sequ
 }
 
 
-//按拉长fasta输出,按内存原串插入
+
 void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<unsigned char>>& sequences,
     std::vector<std::vector<Insertion>>& insertions, std::vector<std::vector<Insertion>>& N_insertions,
     std::vector<std::string>& name,bool TU)
-    //写回比对结果
+
 {
     if (!TU) chars[4] = 'U';
     //std::cout << "0memory usage: " << getPeakRSS() << " B" << std::endl;//输出内存耗费
-       //插入到原串
+
     const size_t sequence_number = insertions.size();
     //std::cout << "insertions " << sequence_number << " " << insertions[0].size() << " " << insertions[1].size() << "\n";
     int score = 0, length = 0, name_len = 0;
@@ -779,7 +775,7 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
     for (int i = 0; i < name.size(); i++)
         if (name_len < name[i].size())
             name_len = name[i].size();
-    const auto align_start1 = std::chrono::high_resolution_clock::now(); //记录插入起始时间
+    const auto align_start1 = std::chrono::high_resolution_clock::now(); 
 
     std::vector<std::vector<Insertion2>> all_insertions;
     std::vector<Insertion2> i_all_insertions;
@@ -795,15 +791,15 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
     for (i = 0; i < sequence_number; i++)
         for (j = 0; j < N_insertions[i].size(); j++)
             len_sequences[i] += N_insertions[i][j].number;
-    //变insertions
+
     for (int k = 0; k < sequence_number; k++)
     {
         i = 0; j = 0; g_num = 0;
         for (int kk = 0; kk < sequence_number; kk++) ii[kk] = 0;
-        std::vector<Insertion2>().swap(i_all_insertions);//清空 i_all_insertions
+        std::vector<Insertion2>().swap(i_all_insertions);
         while (i < insertions[k].size() && j < N_insertions[k].size())
         {
-            if (insertions[k][i].index == N_insertions[k][j].index)//相等变number
+            if (insertions[k][i].index == N_insertions[k][j].index)
             {
                 g_num += insertions[k][i].number;
                 if (N_insertions[k][j].number > insertions[k][i].number)
@@ -830,12 +826,12 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
                 i++;
             }
         }
-        while (j < N_insertions[k].size()) //后续多余的N，继续插入
+        while (j < N_insertions[k].size()) 
         {
             insert_others(Insertion2({ N_insertions[k][j].index + g_num ,N_insertions[k][j].number, 0 }), utils::Insertion2({ N_insertions[k][j].index + g_num ,0, N_insertions[k][j].number }), more_insertions, k, sequence_number, ii);
             j++;
         }
-        while (i < insertions[k].size()) //后续多余的gap，继续插入
+        while (i < insertions[k].size())
         {
             g_num += insertions[k][i].number;
             i_all_insertions.emplace_back(Insertion2({ insertions[k][i].index, 0,insertions[k][i].number }));
@@ -843,7 +839,7 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
         }
         all_insertions.emplace_back(i_all_insertions);
     }
-    //释放空间
+
     for (i = 0; i < N_insertions[i].size(); i++)
     {
         std::vector<Insertion>().swap(N_insertions[i]);
@@ -851,7 +847,7 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
     }
     std::vector<std::vector<Insertion>>().swap(N_insertions);
     std::vector<std::vector<Insertion>>().swap(insertions);
-    //消除  一列多个N导致de多个插空
+
     int min_size, min_i;
     std::vector<Insertion> multi;
     std::vector<Insertion> tmp;
@@ -919,7 +915,7 @@ void utils::insert_and_write_fasta(std::ostream& os, std::vector<std::vector<uns
             }
             multi = tmp;
         }
-    //插入到原串
+
     int more = 0, all_size = 0, ti = 0, k = 0;
     for (i = 0; i < sequence_number; i++)
     {

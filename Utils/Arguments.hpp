@@ -1,5 +1,4 @@
 #pragma once
-//输入输出路径，参数
 #include <string>
 
 namespace arguments

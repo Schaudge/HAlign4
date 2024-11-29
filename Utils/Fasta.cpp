@@ -1,8 +1,8 @@
 #include "Fasta.hpp"
-//.fasta读取，写入
+
 #include <cstring>
 
-utils::Fasta::Fasta(std::istream &is) //读取
+utils::Fasta::Fasta(std::istream &is)
 {
     _read(is);
 }
@@ -15,7 +15,7 @@ void utils::Fasta::write_to(std::ostream &os, bool with_identification) const
         write_to(os, sequences.cbegin(), sequences.cend());
 }
 
-void utils::Fasta::_read(std::istream &is) //读取文件
+void utils::Fasta::_read(std::istream &is)
 {
     std::string each_line;
     std::string each_sequence;
@@ -39,7 +39,7 @@ void utils::Fasta::_read(std::istream &is) //读取文件
     sequences.emplace_back(each_sequence);
 }
 
-void utils::Fasta::cut_and_write(std::ostream &os, const std::string &sequence) ////一条长序列分多行写入
+void utils::Fasta::cut_and_write(std::ostream &os, const std::string &sequence) 
 {
     const size_t sequence_length = sequence.size();
 
