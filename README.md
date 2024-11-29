@@ -24,9 +24,9 @@ halign4 -h
 ```
 
 
-### 2. Source Installation with CMake
+### 2. Source Installation with Make
 
-This method allows you to manually compile HAlign4 using CMake and the system's compiler.
+This method allows you to manually compile HAlign4 using Make.
 
 #### Steps:
 
@@ -54,7 +54,7 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
 
 4. **Run HAlign4**:
 
-   After the build process completes, the executable `halign4` will be available in the `build` directory. You can run it using the following command:
+   After the build process completes, the executable `halign4` will be available in the current directory. You can run it using the following command:
 
    ```bash
    ./halign4 -h
