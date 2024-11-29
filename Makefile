@@ -67,8 +67,8 @@ $(FOLDER_BUILD_CPP):
 $(FOLDER_LIB):
 	@mkdir -p $@
 
-lib_wfa: $(SUBDIRS)
-	$(AR) $(AR_FLAGS) $(LIB_WFA) $(FOLDER_BUILD)/*.o 2> /dev/null
+lib_wfa: $(FOLDER_BUILD) $(FOLDER_BUILD_CPP)
+	$(AR) $(AR_FLAGS) $(LIB_WFA) $(FOLDER_BUILD)/*.o
 	$(AR) $(AR_FLAGS) $(LIB_WFA_CPP) $(FOLDER_BUILD)/*.o $(FOLDER_BUILD_CPP)/*.o 2> /dev/null
 
 ###############################################################################
@@ -79,6 +79,9 @@ $(SUBDIRS):
 	$(MAKE) --directory=$@ all
 
 .PHONY: $(SUBDIRS)
+
+.NOTPARALLEL: lib_wfa h4
+
 
 ###############################################################################
 # Rules
