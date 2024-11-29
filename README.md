@@ -53,6 +53,7 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
    make
    ```
 Note! Please use gcc-9 and g++-9 for make. Do not enable multi-threading; otherwise, the make process may fail. We will resolve this issue promptly.
+
 4. **Run HAlign4**:
 
    After the build process completes, the executable `halign4` will be available in the `build` directory. You can run it using the following command:
