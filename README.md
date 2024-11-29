@@ -26,7 +26,7 @@ halign4 -h
 
 ### 2. Source Installation with Make
 
-This method allows you to manually compile HAlign4 using Make.
+This method allows you to manually compile HAlign4 using Make. For [here](https://github.com/metaphysicser/HAlign-4/releases) to get lastest release.
 
 #### Steps:
 
