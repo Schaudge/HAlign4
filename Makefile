@@ -16,17 +16,13 @@ CC:=$(CC)
 CPP:=$(CXX)
 
 CC_FLAGS=-w -Wall -g -fPIE
+ifndef DISABLED_MARCH_NATIVE
+CC_FLAGS+= -march=native
+$(info [INFO] -march=native is ENABLED in CC_FLAGS.)
+endif
 
 AR=ar
 AR_FLAGS=-rsc
-
-GPP9_EXISTS := $(shell command -v g++-9 2> /dev/null)
-
-ifeq ($(strip $(GPP9_EXISTS)),)
-  CXX = g++
-else
-  CXX = g++-9
-endif
 
 ###############################################################################
 # Configuration rules
@@ -39,7 +35,8 @@ SUBDIRS=PairwiseAlignment/WFA2-lib/alignment \
         PairwiseAlignment/WFA2-lib/utils \
         PairwiseAlignment/WFA2-lib/wavefront
 
-all: CC_FLAGS+=-O3 -march=native #-flto -ffat-lto-objects
+# Ensure GCC standard and optimization level
+all: CC_FLAGS+=-O3
 all: build h4
 
 debug: build
@@ -55,13 +52,21 @@ asan: build
 ###############################################################################
 # Build rules
 ###############################################################################
-build: setup
-build: $(SUBDIRS) 
-build: lib_wfa 
+build: setup $(FOLDER_BUILD) $(FOLDER_BUILD_CPP) $(FOLDER_LIB)
+build: $(SUBDIRS) lib_wfa
 
 setup:
 	@mkdir -p $(FOLDER_BUILD) $(FOLDER_BUILD_CPP) $(FOLDER_LIB)
-    
+
+$(FOLDER_BUILD):
+	@mkdir -p $@
+
+$(FOLDER_BUILD_CPP):
+	@mkdir -p $@
+
+$(FOLDER_LIB):
+	@mkdir -p $@
+
 lib_wfa: $(SUBDIRS)
 	$(AR) $(AR_FLAGS) $(LIB_WFA) $(FOLDER_BUILD)/*.o 2> /dev/null
 	$(AR) $(AR_FLAGS) $(LIB_WFA_CPP) $(FOLDER_BUILD)/*.o $(FOLDER_BUILD_CPP)/*.o 2> /dev/null
@@ -72,7 +77,7 @@ lib_wfa: $(SUBDIRS)
 export
 $(SUBDIRS):
 	$(MAKE) --directory=$@ all
-    
+
 .PHONY: $(SUBDIRS)
 
 ###############################################################################
@@ -82,7 +87,7 @@ LIBS=-fopenmp -lm
 ifeq ($(UNAME), Linux)
   LIBS+=-lrt 
 endif
-        
+
 h4: *.cpp $(LIB_WFA)
 	g++ $(CC_FLAGS) -L$(FOLDER_LIB) -I$(FOLDER_WFA) \
 	./PairwiseAlignment/NeedlemanWunshReusable.cpp \
@@ -97,7 +102,6 @@ h4: *.cpp $(LIB_WFA)
 	./StarAlignment/StarAligner.cpp \
 	stmsa.cpp -o halign4 -static-libstdc++ -std=c++17 -lpthread -lwfacpp $(LIBS)
 
-clean: 
+clean:
 	rm -rf $(FOLDER_BUILD) $(FOLDER_LIB) 2> /dev/null
-	rm -rf $(FOLDER_TESTS)/*.alg $(FOLDER_TESTS)/*.log* 2> /dev/null
-	rm h4
+	rm -rf halign4
