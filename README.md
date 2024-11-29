@@ -83,6 +83,6 @@ Here is a simple example of using HAlign4 for multiple sequence alignment:
 This command will use 4 threads to align the sequences in the `input.fasta` file, and the result will be saved in the `output.fasta` file.
 
 ## License
-HAlign4 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign4/blob/main/LICENSE).
+HAlign4 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign-4/blob/main/LICENSE).
 
 
