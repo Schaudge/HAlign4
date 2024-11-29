@@ -51,7 +51,6 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
    ```bash
    make
    ```
-Note! Please use gcc-9 and g++-9 for make. Do not enable multi-threading; otherwise, the make process may fail. We will resolve this issue promptly.
 
 4. **Run HAlign4**:
 
@@ -82,9 +81,6 @@ Here is a simple example of using HAlign4 for multiple sequence alignment:
 ```
 
 This command will use 4 threads to align the sequences in the `input.fasta` file, and the result will be saved in the `output.fasta` file.
-
-## Reference
-- [HAlign Official Website](http://lab.malab.cn/soft/halign/)
 
 ## License
 HAlign4 is developed by the Malab team under the [MIT License](https://github.com/metaphysicser/HAlign4/blob/main/LICENSE).
