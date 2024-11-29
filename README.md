@@ -15,7 +15,7 @@ HAlign4 is a high-performance multiple sequence alignment software based on the 
 ### 1. Conda Installation
 
 This method uses Conda to create an isolated environment and install HAlign4 with all dependencies.
-
+*The software in Conda has a bug, and we are working to resolve this issue.*
    
 ```bash
 conda create -n halign4
@@ -52,7 +52,7 @@ This method allows you to manually compile HAlign4 using CMake and the system's 
    ```bash
    make
    ```
-注意！请使用gcc-9和g++-9来make，不要开启多线程，否则会make失败，我们迅速解决此问题
+Note! Please use gcc-9 and g++-9 for make. Do not enable multi-threading; otherwise, the make process may fail. We will resolve this issue promptly.
 4. **Run HAlign4**:
 
    After the build process completes, the executable `halign4` will be available in the `build` directory. You can run it using the following command:
