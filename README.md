@@ -1,6 +1,6 @@
 # HAlign4
 
-HAlign4 is a high-performance multiple sequence alignment software based on the star alignment strategy, designed for efficiently aligning large numbers of sequences. Compared to its predecessor HAlign3, HAlign4 further enhances the ability to handle long sequences and large-scale datasets, enabling fast and efficient alignment on standard computing devices.
+[HAlign4](https://academic.oup.com/bioinformatics/article/40/12/btae718/7912339?login=false) is a high-performance multiple sequence alignment software based on the star alignment strategy, designed for efficiently aligning large numbers of sequences. Compared to its predecessor HAlign3, HAlign4 further enhances the ability to handle long sequences and large-scale datasets, enabling fast and efficient alignment on standard computing devices.
 
 ## Background
 [HAlign3](https://github.com/malabz/HAlign-3) was implemented in Java and was capable of efficiently aligning ultra-large sets of similar DNA/RNA sequences, but had limitations when dealing with long sequences and very large datasets. To address these issues, HAlign4 was reimplemented in C++ and incorporates the Burrows-Wheeler Transform (BWT) and wavefront alignment algorithm.
